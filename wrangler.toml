@@ -1,0 +1,7 @@
+name = "comfyui-saas"
+compatibility_date = "2026-05-10"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+
+# Do not put secrets in this file.
+# Configure production values in Cloudflare Pages > Settings > Environment variables.

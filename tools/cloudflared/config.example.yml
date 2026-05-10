@@ -1,0 +1,7 @@
+tunnel: comfyui
+credentials-file: C:\Users\HY\.cloudflared\<tunnel-id>.json
+
+ingress:
+  - hostname: comfyui-api.yourdomain.com
+    service: http://localhost:8188
+  - service: http_status:404
