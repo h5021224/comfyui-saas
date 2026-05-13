@@ -7,6 +7,7 @@ npm-debug.log*
 next-dev.log
 .next-dev.*.log
 .env
+.env.production
 .env*.local
 coverage
 tools/cloudflared/cloudflared.exe
