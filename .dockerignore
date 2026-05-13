@@ -1,0 +1,16 @@
+.git
+.github
+.next
+.vercel
+node_modules
+npm-debug.log*
+next-dev.log
+.next-dev.*.log
+.env
+.env*.local
+coverage
+tools/cloudflared/cloudflared.exe
+tools/cloudflared/*.log
+tools/cloudflared/*.json
+tools/cloudflared/*.pem
+tools/cloudflared/config.yml

@@ -92,6 +92,8 @@ does not have a supported Stripe business entity yet. Full production
 verification still needs a stable named Cloudflare Tunnel and a production
 hosting decision. Options are:
 
-- deploy the web app to a Node-capable host such as Vercel or a VPS;
+- deploy the web app to a long-running Node host such as a VPS;
 - refactor the app for Cloudflare Edge/OpenNext compatibility;
 - split the product into a static/edge frontend plus separate Node API worker.
+
+See `docs/vps-deployment.md` for the current recommended path.

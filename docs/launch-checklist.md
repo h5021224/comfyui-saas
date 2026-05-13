@@ -17,10 +17,11 @@ This checklist tracks what is ready and what is blocked before production.
 - [x] GitHub Actions Ubuntu CI workflow added.
 - [x] Cloudflare R2 development bucket configured and upload verified.
 - [x] Basic generation rate limiting and prompt filtering implemented.
+- [x] Docker/VPS deployment files added.
 - [ ] Stripe test keys configured and checkout flow verified.
 - [ ] Named Cloudflare Tunnel configured with a stable custom hostname.
-- [ ] Production hosting target decided after Cloudflare Pages incompatibility review.
-- [ ] Production environment variables configured in Cloudflare Pages.
+- [x] Production hosting target shifted to long-running Node/VPS path.
+- [ ] Production environment variables configured on the chosen host.
 - [ ] Full paid end-to-end test passed.
 
 ## External blockers
@@ -61,7 +62,8 @@ This checklist tracks what is ready and what is blocked before production.
 
 - [ ] Push project to GitHub.
 - [x] Add GitHub Actions workflow for Ubuntu lint/build verification.
-- [ ] Decide whether to deploy on Vercel/VPS or refactor for Cloudflare Edge/OpenNext.
+- [x] Add Dockerfile and compose example for VPS deployment.
+- [x] Decide to use a long-running Node/VPS path unless a later Cloudflare Edge refactor is planned.
 - [ ] If using Cloudflare Pages, refactor non-static routes for Edge Runtime first.
 - [ ] Configure all production environment variables on the chosen host.
 - [ ] Set `NEXTAUTH_URL` to the production domain.
@@ -86,7 +88,7 @@ This checklist tracks what is ready and what is blocked before production.
 
 ## Known risks
 
-- `@cloudflare/next-on-pages` is archived and failed in Ubuntu because this app has non-static Node.js routes. Production deployment should use a Node-capable host or a deliberate Cloudflare Edge/OpenNext refactor.
+- `@cloudflare/next-on-pages` is archived and failed in Ubuntu because this app has non-static Node.js routes. Production deployment should use a long-running Node host or a deliberate Cloudflare Edge/OpenNext refactor.
 - In-memory SSE progress and generation rate limiting only work reliably in a single running instance. Multi-instance/serverless production needs persistent progress storage and an external rate-limit store.
 - R2 is configured for development and verified with a real upload. Stripe still needs test keys and webhook verification.
 - The Neon connection string was exposed earlier in conversation screenshots and should be reset before production.
