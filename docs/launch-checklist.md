@@ -21,7 +21,7 @@ This checklist tracks what is ready and what is blocked before production.
 - [ ] Stripe test keys configured and checkout flow verified.
 - [ ] Named Cloudflare Tunnel configured with a stable custom hostname.
 - [x] Production hosting target shifted to long-running Node/VPS path.
-- [ ] Production environment variables configured on the chosen host.
+- [x] Production-like environment variables configured on the VPS for MVP testing.
 - [ ] Full paid end-to-end test passed.
 
 ## External blockers
@@ -51,6 +51,7 @@ This checklist tracks what is ready and what is blocked before production.
 
 ### Cloudflare Tunnel
 
+- [x] Quick Tunnel connects VPS app to local ComfyUI for MVP testing.
 - [ ] Create named tunnel `comfyui` in Cloudflare Dashboard.
 - [ ] Bind public hostname, for example `comfyui-api.yourdomain.com`.
 - [ ] Point service to `http://localhost:8188`.
@@ -60,25 +61,26 @@ This checklist tracks what is ready and what is blocked before production.
 
 ### Hosting
 
-- [ ] Push project to GitHub.
+- [x] Push project to GitHub.
 - [x] Add GitHub Actions workflow for Ubuntu lint/build verification.
 - [x] Add Dockerfile and compose example for VPS deployment.
 - [x] Decide to use a long-running Node/VPS path unless a later Cloudflare Edge refactor is planned.
 - [ ] If using Cloudflare Pages, refactor non-static routes for Edge Runtime first.
-- [ ] Configure all production environment variables on the chosen host.
-- [ ] Set `NEXTAUTH_URL` to the production domain.
-- [ ] Verify production build on the chosen host.
+- [x] Configure MVP environment variables on the VPS.
+- [x] Set `NEXTAUTH_URL` to the VPS HTTP endpoint.
+- [x] Verify production build on the VPS with Docker.
+- [x] Confirm the app is reachable over the public VPS IP and port.
 
 ## Pre-launch smoke tests
 
-- [ ] Register a new user.
-- [ ] Login with email/password.
+- [x] Register a new user.
+- [x] Login with email/password.
 - [ ] Check initial gift credits.
 - [ ] Purchase credits through Stripe test mode.
-- [ ] Generate a 512 x 512 image.
-- [ ] Confirm credits are deducted.
-- [ ] Confirm ComfyUI receives and completes the prompt.
-- [ ] Confirm generated image uploads to R2.
+- [x] Generate a 512 x 512 image.
+- [x] Confirm credits are deducted.
+- [x] Confirm ComfyUI receives and completes the prompt through Quick Tunnel.
+- [x] Confirm generated image uploads to R2.
 - [ ] Confirm `/history` displays the image and details.
 - [ ] Confirm download link works.
 - [ ] Confirm generation rate limit returns 429 after repeated requests.
@@ -92,3 +94,4 @@ This checklist tracks what is ready and what is blocked before production.
 - In-memory SSE progress and generation rate limiting only work reliably in a single running instance. Multi-instance/serverless production needs persistent progress storage and an external rate-limit store.
 - R2 is configured for development and verified with a real upload. Stripe still needs test keys and webhook verification.
 - The Neon connection string was exposed earlier in conversation screenshots and should be reset before production.
+- The current ComfyUI Quick Tunnel is temporary. Closing the local cloudflared window invalidates `COMFYUI_API_URL`; use a named tunnel before relying on the service.

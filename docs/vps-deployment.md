@@ -42,6 +42,16 @@ docker compose -f docker-compose.example.yml up -d --build
 
 The app listens on port `3000` inside the container.
 
+## Current VPS smoke result
+
+The MVP has been deployed to a Tencent Cloud Lighthouse Ubuntu 22.04 VPS with
+Docker and `docker-compose`. The public HTTP endpoint on port `3000` loads the
+app, email/password registration works, and a 512 x 512 generation has completed
+through a local ComfyUI Quick Tunnel.
+
+The current ComfyUI tunnel is temporary. Keep the local `cloudflared` window
+open while testing. Replace it with a named Cloudflare Tunnel before public use.
+
 ## Required environment variables
 
 - `DATABASE_URL`
