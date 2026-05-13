@@ -1,4 +1,4 @@
-name: Pages build
+name: CI
 
 on:
   push:
@@ -42,5 +42,7 @@ jobs:
       - name: Build Next.js
         run: npm run build
 
-      - name: Build Cloudflare Pages output
-        run: npm run pages:build
+      - name: Cloudflare Pages compatibility note
+        run: |
+          echo "Skipping npm run pages:build in CI."
+          echo "The current app uses Node.js API routes and background processing that are not compatible with next-on-pages Edge-only routing."

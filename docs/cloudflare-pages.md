@@ -61,8 +61,14 @@ reliable on Windows. Run the Pages build in one of these environments instead:
 - WSL with Node.js and npm installed.
 - GitHub Actions on Ubuntu.
 
-This repository includes `.github/workflows/pages-build.yml` to run lint,
-`next build`, and `pages:build` on Ubuntu after the project is pushed to GitHub.
+This repository includes `.github/workflows/pages-build.yml` to run lint and
+`next build` on Ubuntu after the project is pushed to GitHub.
+
+The first Ubuntu `pages:build` check failed because `@cloudflare/next-on-pages`
+requires all non-static routes to run on the Edge Runtime. The current app uses
+Node.js API routes and background processing for Auth, ComfyUI WebSocket
+progress, R2 upload, Stripe webhook handling, and database writes, so it is not
+a direct fit for `next-on-pages` without a deployment refactor.
 
 The normal Next.js build still passes locally:
 
@@ -83,5 +89,9 @@ npm.cmd run build
 R2 is configured for development and has been verified with a real upload.
 Stripe is deferred because the current owner is a mainland China individual and
 does not have a supported Stripe business entity yet. Full production
-verification still needs a stable named Cloudflare Tunnel, Cloudflare Pages
-environment variables, and a successful Linux Pages build.
+verification still needs a stable named Cloudflare Tunnel and a production
+hosting decision. Options are:
+
+- deploy the web app to a Node-capable host such as Vercel or a VPS;
+- refactor the app for Cloudflare Edge/OpenNext compatibility;
+- split the product into a static/edge frontend plus separate Node API worker.

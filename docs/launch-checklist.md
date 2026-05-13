@@ -14,12 +14,12 @@ This checklist tracks what is ready and what is blocked before production.
 - [x] Generate, history, and billing dashboard pages implemented.
 - [x] Cloudflare Tunnel quick tunnel smoke test passed.
 - [x] Cloudflare Pages configuration files and scripts added.
-- [x] GitHub Actions Ubuntu Pages build workflow added.
+- [x] GitHub Actions Ubuntu CI workflow added.
 - [x] Cloudflare R2 development bucket configured and upload verified.
 - [x] Basic generation rate limiting and prompt filtering implemented.
 - [ ] Stripe test keys configured and checkout flow verified.
 - [ ] Named Cloudflare Tunnel configured with a stable custom hostname.
-- [ ] Cloudflare Pages build verified in Linux/Cloudflare build environment.
+- [ ] Production hosting target decided after Cloudflare Pages incompatibility review.
 - [ ] Production environment variables configured in Cloudflare Pages.
 - [ ] Full paid end-to-end test passed.
 
@@ -57,17 +57,15 @@ This checklist tracks what is ready and what is blocked before production.
 - [ ] Set `COMFYUI_API_URL` to the tunnel hostname.
 - [ ] Confirm `/system_stats` is reachable through the hostname.
 
-### Cloudflare Pages
+### Hosting
 
 - [ ] Push project to GitHub.
-- [x] Add GitHub Actions workflow for Ubuntu Pages build verification.
-- [ ] Create Cloudflare Pages project from the repository.
-- [ ] Use build command `npm run pages:build`.
-- [ ] Use output directory `.vercel/output/static`.
-- [ ] Enable `nodejs_compat`.
-- [ ] Configure all environment variables from `.env.cloudflare.example`.
+- [x] Add GitHub Actions workflow for Ubuntu lint/build verification.
+- [ ] Decide whether to deploy on Vercel/VPS or refactor for Cloudflare Edge/OpenNext.
+- [ ] If using Cloudflare Pages, refactor non-static routes for Edge Runtime first.
+- [ ] Configure all production environment variables on the chosen host.
 - [ ] Set `NEXTAUTH_URL` to the production domain.
-- [ ] Verify Pages build in Linux/Cloudflare environment.
+- [ ] Verify production build on the chosen host.
 
 ## Pre-launch smoke tests
 
@@ -88,7 +86,7 @@ This checklist tracks what is ready and what is blocked before production.
 
 ## Known risks
 
-- `@cloudflare/next-on-pages` is archived and has Windows build issues. Production deployment should be verified in Cloudflare Pages Linux build or reconsidered with OpenNext Cloudflare adapter.
+- `@cloudflare/next-on-pages` is archived and failed in Ubuntu because this app has non-static Node.js routes. Production deployment should use a Node-capable host or a deliberate Cloudflare Edge/OpenNext refactor.
 - In-memory SSE progress and generation rate limiting only work reliably in a single running instance. Multi-instance/serverless production needs persistent progress storage and an external rate-limit store.
 - R2 is configured for development and verified with a real upload. Stripe still needs test keys and webhook verification.
 - The Neon connection string was exposed earlier in conversation screenshots and should be reset before production.
