@@ -61,6 +61,9 @@ reliable on Windows. Run the Pages build in one of these environments instead:
 - WSL with Node.js and npm installed.
 - GitHub Actions on Ubuntu.
 
+This repository includes `.github/workflows/pages-build.yml` to run lint,
+`next build`, and `pages:build` on Ubuntu after the project is pushed to GitHub.
+
 The normal Next.js build still passes locally:
 
 ```powershell
@@ -77,5 +80,8 @@ npm.cmd run build
 
 ## Current blockers
 
-R2 and Stripe are not configured yet. Pages can be prepared, but full production
-verification needs those credentials plus a stable named Cloudflare Tunnel.
+R2 is configured for development and has been verified with a real upload.
+Stripe is deferred because the current owner is a mainland China individual and
+does not have a supported Stripe business entity yet. Full production
+verification still needs a stable named Cloudflare Tunnel, Cloudflare Pages
+environment variables, and a successful Linux Pages build.

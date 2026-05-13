@@ -14,24 +14,27 @@ This checklist tracks what is ready and what is blocked before production.
 - [x] Generate, history, and billing dashboard pages implemented.
 - [x] Cloudflare Tunnel quick tunnel smoke test passed.
 - [x] Cloudflare Pages configuration files and scripts added.
-- [ ] Cloudflare R2 production bucket configured.
+- [x] GitHub Actions Ubuntu Pages build workflow added.
+- [x] Cloudflare R2 development bucket configured and upload verified.
+- [x] Basic generation rate limiting and prompt filtering implemented.
 - [ ] Stripe test keys configured and checkout flow verified.
 - [ ] Named Cloudflare Tunnel configured with a stable custom hostname.
 - [ ] Cloudflare Pages build verified in Linux/Cloudflare build environment.
 - [ ] Production environment variables configured in Cloudflare Pages.
-- [ ] Full end-to-end test passed.
+- [ ] Full paid end-to-end test passed.
 
 ## External blockers
 
 ### Cloudflare R2
 
-- [ ] Add payment method to Cloudflare.
-- [ ] Create R2 bucket, for example `comfyui-saas-images`.
-- [ ] Create R2 API token with object read/write access.
-- [ ] Configure public URL or custom domain.
-- [ ] Set `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET_NAME`, `R2_PUBLIC_URL`.
-- [ ] Run a real generation and confirm `generation_tasks.imageUrl` is populated.
-- [ ] Confirm `/history` displays completed images.
+- [x] Add payment method to Cloudflare.
+- [x] Create R2 bucket `comfyui-saas-images`.
+- [x] Create R2 API token with object read/write access.
+- [x] Configure Public Development URL.
+- [x] Set `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET_NAME`, `R2_PUBLIC_URL` locally.
+- [x] Run a real generation and confirm `generation_tasks.imageUrl` is populated.
+- [x] Confirm `/history` API returns a completed task with image URL.
+- [ ] Replace Public Development URL with a custom production domain.
 
 ### Stripe
 
@@ -57,6 +60,7 @@ This checklist tracks what is ready and what is blocked before production.
 ### Cloudflare Pages
 
 - [ ] Push project to GitHub.
+- [x] Add GitHub Actions workflow for Ubuntu Pages build verification.
 - [ ] Create Cloudflare Pages project from the repository.
 - [ ] Use build command `npm run pages:build`.
 - [ ] Use output directory `.vercel/output/static`.
@@ -77,12 +81,14 @@ This checklist tracks what is ready and what is blocked before production.
 - [ ] Confirm generated image uploads to R2.
 - [ ] Confirm `/history` displays the image and details.
 - [ ] Confirm download link works.
+- [ ] Confirm generation rate limit returns 429 after repeated requests.
+- [ ] Confirm disallowed prompts return 400 before credits are deducted.
 - [ ] Confirm failed generation refunds credits.
 - [ ] Confirm unauthenticated API calls return 401.
 
 ## Known risks
 
 - `@cloudflare/next-on-pages` is archived and has Windows build issues. Production deployment should be verified in Cloudflare Pages Linux build or reconsidered with OpenNext Cloudflare adapter.
-- In-memory SSE progress only works reliably in a single running instance. Multi-instance/serverless production needs persistent progress storage or an external event channel.
-- R2 and Stripe are currently not configured because Cloudflare payment setup is blocked by lack of a physical card.
+- In-memory SSE progress and generation rate limiting only work reliably in a single running instance. Multi-instance/serverless production needs persistent progress storage and an external rate-limit store.
+- R2 is configured for development and verified with a real upload. Stripe still needs test keys and webhook verification.
 - The Neon connection string was exposed earlier in conversation screenshots and should be reset before production.

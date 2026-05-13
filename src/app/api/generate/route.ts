@@ -6,8 +6,10 @@ import { getCurrentUserId } from '@/lib/auth/currentUser';
 import { InsufficientCreditsError, calculateCreditsCost, deductCredits } from '@/lib/credits';
 import { db } from '@/lib/db';
 import { generationTasks } from '@/lib/db/schema';
+import { assertPromptAllowed, UnsafePromptError } from '@/lib/generate/contentSafety';
 import { publishTaskEvent } from '@/lib/generate/events';
 import { processGenerationTask } from '@/lib/generate/processor';
+import { checkGenerationRateLimit } from '@/lib/generate/rateLimit';
 import { generateRequestSchema } from '@/lib/generate/validation';
 
 export const runtime = 'nodejs';
@@ -20,7 +22,29 @@ export async function POST(request: Request) {
   }
 
   try {
+    const rateLimit = checkGenerationRateLimit(userId);
+
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        {
+          error: 'Too many generation requests',
+          retryAfter: rateLimit.retryAfterSeconds,
+        },
+        {
+          status: 429,
+          headers: {
+            'Retry-After': String(rateLimit.retryAfterSeconds),
+            'X-RateLimit-Limit': String(rateLimit.limit),
+            'X-RateLimit-Remaining': String(rateLimit.remaining),
+            'X-RateLimit-Reset': String(Math.ceil(rateLimit.resetAt / 1000)),
+          },
+        },
+      );
+    }
+
     const input = generateRequestSchema.parse(await request.json());
+    assertPromptAllowed(input);
+
     const creditsCost = calculateCreditsCost(input);
     const [task] = await db
       .insert(generationTasks)
@@ -78,6 +102,17 @@ export async function POST(request: Request) {
           creditsAvailable: error.creditsAvailable,
         },
         { status: 402 },
+      );
+    }
+
+    if (error instanceof UnsafePromptError) {
+      return NextResponse.json(
+        {
+          error: 'Prompt contains disallowed content',
+          code: error.code,
+          reason: error.reason,
+        },
+        { status: 400 },
       );
     }
 
