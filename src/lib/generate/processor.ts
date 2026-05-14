@@ -91,6 +91,11 @@ export async function processGenerationTask({ taskId, userId, input, creditsCost
     });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Generation failed';
+    console.error('Generation task failed', {
+      taskId,
+      userId,
+      error,
+    });
 
     await db
       .update(generationTasks)
