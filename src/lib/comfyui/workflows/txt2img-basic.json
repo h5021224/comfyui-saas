@@ -1,7 +1,7 @@
 {
   "3": {
     "inputs": {
-      "seed": 1052920453136698,
+      "seed": 349393941744654,
       "steps": 35,
       "cfg": 5,
       "sampler_name": "dpmpp_2m",
@@ -42,7 +42,7 @@
     "inputs": {
       "width": 768,
       "height": 1152,
-      "batch_size": 3
+      "batch_size": 1
     },
     "class_type": "EmptyLatentImage",
     "_meta": {
@@ -119,82 +119,6 @@
       "title": "加载VAE"
     }
   },
-  "13": {
-    "inputs": {
-      "strength": 0.6,
-      "control_net": [
-        "14",
-        0
-      ],
-      "image": [
-        "31",
-        0
-      ]
-    },
-    "class_type": "ControlNetApply",
-    "_meta": {
-      "title": "应用ControlNet（旧版）"
-    }
-  },
-  "14": {
-    "inputs": {
-      "control_net_name": "OpenPoseXL2.safetensors"
-    },
-    "class_type": "ControlNetLoader",
-    "_meta": {
-      "title": "加载ControlNet模型"
-    }
-  },
-  "17": {
-    "inputs": {
-      "image": "微信图片_2026-03-19_210813_993.jpg"
-    },
-    "class_type": "LoadImage",
-    "_meta": {
-      "title": "加载图像"
-    }
-  },
-  "30": {
-    "inputs": {
-      "images": [
-        "31",
-        0
-      ]
-    },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "预览图像"
-    }
-  },
-  "31": {
-    "inputs": {
-      "detect_hand": "enable",
-      "detect_body": "enable",
-      "detect_face": "enable",
-      "resolution": 768,
-      "scale_stick_for_xinsr_cn": "disable",
-      "image": [
-        "17",
-        0
-      ]
-    },
-    "class_type": "OpenposePreprocessor",
-    "_meta": {
-      "title": "OpenPose Pose"
-    }
-  },
-  "34": {
-    "inputs": {
-      "images": [
-        "8",
-        0
-      ]
-    },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "预览图像"
-    }
-  },
   "37": {
     "inputs": {
       "lora_name": "BBC_gay_v1.0.safetensors",
@@ -212,6 +136,19 @@
     "class_type": "LoraLoader",
     "_meta": {
       "title": "加载LoRA"
+    }
+  },
+  "38": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "images": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "保存图像"
     }
   }
 }
