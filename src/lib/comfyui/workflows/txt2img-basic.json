@@ -1,14 +1,14 @@
 {
   "3": {
     "inputs": {
-      "seed": 520556744538944,
+      "seed": 1052920453136698,
       "steps": 35,
       "cfg": 5,
       "sampler_name": "dpmpp_2m",
       "scheduler": "karras",
       "denoise": 1,
       "model": [
-        "4",
+        "37",
         0
       ],
       "positive": [
@@ -42,7 +42,7 @@
     "inputs": {
       "width": 768,
       "height": 1152,
-      "batch_size": 1
+      "batch_size": 3
     },
     "class_type": "EmptyLatentImage",
     "_meta": {
@@ -51,9 +51,9 @@
   },
   "6": {
     "inputs": {
-      "text": "a red apple on a wooden table, product photography, studio lighting, safe for work",
+      "text": "BBC,handsome face,(bulky muscular build with high body fat:1.5),(bear body type),(eyes closed),cute,young,gay anal sex,huge penis,strong-ejaculation,big muscle,erection,cum shot,anal penetration,naked,veiny,detailed anatomy, realistic skin,pores,hairy chest,mouth open,(tongue),mailman,frown,sucking",
       "clip": [
-        "4",
+        "37",
         1
       ]
     },
@@ -64,9 +64,9 @@
   },
   "7": {
     "inputs": {
-      "text": "nsfw, nude, explicit, people, blurry, low quality, watermark, text",
+      "text": "deformed, bad anatomy, bad hands, extra fingers, missing fingers, blurry,  \n  low quality, cartoon, anime, drawing, painting, text, watermark, signature,   extra limbs, disfigured face, ugly",
       "clip": [
-        "4",
+        "37",
         1
       ]
     },
@@ -89,6 +89,25 @@
     "class_type": "VAEDecode",
     "_meta": {
       "title": "VAE解码"
+    }
+  },
+  "11": {
+    "inputs": {
+      "lora_name": "Gay_Anal_Sex.safetensors",
+      "strength_model": 0.5,
+      "strength_clip": 1,
+      "model": [
+        "4",
+        0
+      ],
+      "clip": [
+        "4",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "加载LoRA"
     }
   },
   "12": {
@@ -166,15 +185,33 @@
   },
   "34": {
     "inputs": {
-      "filename_prefix": "comfyui_saas",
       "images": [
         "8",
         0
       ]
     },
-    "class_type": "SaveImage",
+    "class_type": "PreviewImage",
     "_meta": {
-      "title": "Save Image"
+      "title": "预览图像"
+    }
+  },
+  "37": {
+    "inputs": {
+      "lora_name": "BBC_gay_v1.0.safetensors",
+      "strength_model": 0.5,
+      "strength_clip": 1,
+      "model": [
+        "11",
+        0
+      ],
+      "clip": [
+        "11",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "加载LoRA"
     }
   }
 }
